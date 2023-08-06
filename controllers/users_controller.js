@@ -55,20 +55,5 @@ module.exports.create = async (req, res) => {
 
 //sign in and create session for the user
 module.exports.createSession = async function (req, res) {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    if (user) {
-      if (user.password != req.body.password) {
-        return res.redirect("back");
-      } else {
-        res.cookie("user_id", user.id);
-        return res.redirect("/users/profile");
-      }
-    } else {
-      return res.redirect("back");
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ Error: error.message });
-  }
+  return res.redirect('/');
 };
