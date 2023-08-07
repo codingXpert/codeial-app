@@ -7,6 +7,7 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const MongoStore = require("connect-mongo");
 
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
@@ -21,15 +22,16 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.use(
-    session({
-      name:'codeial',
-      secret: 'somethingblabla',
-      resave: false,
-      saveUninitialized: false,
-      cookie: { maxAge: 1000 * 60 * 60 * 24 }, //cookie valid for 24 hours
-    })
-  );
-  
+  session({
+    name: 'codeial',
+    secret: 'somethingblabla',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // cookie valid for 24 hours
+    store:MongoStore.create({mongoUrl:process.env.MONGO_URI}),
+  })
+);
+
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(passport.setAuthenticatedUser);
