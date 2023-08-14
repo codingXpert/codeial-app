@@ -1,9 +1,13 @@
 const User = require("../models/user");
 module.exports.profile = async function (req, res) {
   try {
-    return res.render("User_profile", {
-      title: "User",
-    });
+    const user = await User.findById(req.params.id);
+    if(user) {
+      return res.render("User_profile", {
+        title: "User",
+        profile_user: user
+      });
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).json({ Error: error.message });
