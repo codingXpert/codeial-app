@@ -3,13 +3,14 @@ const Comment = require("../models/comment");
 
 module.exports.create = async (req, res) => {
   try {
-    const createPost = await Post.create({
+      await Post.create({
       content: req.body.content,
       user: req.user._id,
     });
     return res.redirect("back");
   } catch (err) {
     console.log(err);
+    return;
   }
 };
 
@@ -25,7 +26,6 @@ module.exports.destroy = async (req, res) => {
        post.deleteOne();
 
       // Delete comments associated with the post
-      console.log(req.params.id);
       await Comment.deleteMany({ post: req.params.id });
       return res.redirect('back');
     } else {
@@ -33,6 +33,6 @@ module.exports.destroy = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    return res.status(500).send("Internal server error");
+    return res.status(500).send({error: err.message});
   }
 };
