@@ -7,17 +7,18 @@ passport.use(
   new LocalStrategy(
     {
       usernameField: "email",
+      passReqToCallback: true // allow us to set first argument as req in the function just below(req.flash because flash is set to req)
     },
-    async function (email, password, done) {
+    async function (req, email, password, done) {
       try {
         const user = await User.findOne({ email: email });
         if (!user || user.password !== password) {
-          console.log("Invalid Username/Password");
+          req.flash("Invalid Username/Password");
           return done(null, false);
         }
         return done(null, user);
       } catch (err) {
-        console.log("Error in finding user --> passport");
+        req.flash(err);
         return done(err);
       }
     }

@@ -51,13 +51,15 @@ module.exports.signIn = function (req, res) {
 module.exports.create = async (req, res) => {
   try {
     if (req.body.password != req.body.confirm_password) {
+      req.flash('error', 'Password and confirm password should be same')
       return res.redirect("back");
     }
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      const newUser = await User.create(req.body);
+      await User.create(req.body);
       return res.redirect("/users/sign-in");
     } else {
+      req.flash('error', 'Email Already Registered');
       return res.redirect("back");
     }
   } catch (error) {

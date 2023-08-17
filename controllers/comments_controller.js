@@ -12,6 +12,7 @@ module.exports.create = async function (req, res) {
         user: req.user._id,
       });
       post.comments.push(comment);
+      req.flash('success', 'Comment published');
       await post.save();
       res.redirect('/');
     } else {
@@ -36,12 +37,11 @@ module.exports.destroy = async (req, res) => {
 
     if (comment.user == req.user.id) {
       const postId = comment.post;
-
       await comment.deleteOne();
 
       // Update the post to remove the comment from the comments array. the $pull by mongoose will pull out the comment from posts.
       await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } });
-
+      req.flash('success', 'Deleted')
       return res.redirect('back');
     } else {
       return res.status(403).send("You're not authorized to delete this comment");
