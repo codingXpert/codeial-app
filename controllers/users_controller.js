@@ -18,8 +18,10 @@ module.exports.update = async function(req, res) {
   try {
     if(req.user.id === req.params.id) {
       await User.findByIdAndUpdate(req.params.id , req.body);
+      req.flash('success', 'Profile Updated')
       return res.redirect("back")
     }else {
+      req.flash('error', 'Failed to update')
       return res.status(401).send("unauthorized");
     }
   } catch (error) {
