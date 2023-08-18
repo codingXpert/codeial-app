@@ -13,10 +13,10 @@ module.exports.create = async (req, res) => {
           data: {
               post: post
           },
+          flash_message: req.flash('success', 'Post Published!'),
           message: "Post created!"
       });
   }
-    req.flash('success', 'Post Published!');
     return res.redirect("back");
   } catch (err) {
     req.flash('error', err);
@@ -44,6 +44,7 @@ module.exports.destroy = async (req, res) => {
           data: {
               post_id: req.params.id
           },
+          flash_message: req.flash('success', 'Post and associated comments are deleted'),
           message: "Post deleted!"
       });
       }
