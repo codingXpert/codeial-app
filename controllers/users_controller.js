@@ -14,18 +14,30 @@ module.exports.profile = async function (req, res) {
   }
 };
 
-module.exports.update = async function(req, res) {
-  try {
-    if(req.user.id === req.params.id) {
-      await User.findByIdAndUpdate(req.params.id , req.body);
-      req.flash('success', 'Profile Updated')
-      return res.redirect("back")
-    }else {
-      req.flash('error', 'Failed to update')
-      return res.status(401).send("unauthorized");
+// update user profile-image and name and email
+module.exports.update = async (req, res) => {
+  if (req.user.id == req.params.id) {
+    try {
+      let user = await User.findById(req.params.id);
+      User.uploadedAvatar(req, res, async function (err) {
+        if (err) {
+          console.log("multer Error", err);
+        }
+        if(req.file) {
+          user.avatar = User.avatarPath + '/' + req.file.filename;
+        }
+        await user.save();
+        req.flash("success", "Profile updated successfully");
+        return res.redirect("back");
+      });
+    } catch (err) {
+      console.error(err);
+      req.flash("error", "An error occurred");
+      return res.redirect("back");
     }
-  } catch (error) {
-    return res.status(500).send({error:error});
+  } else {
+    req.flash("error", "Unauthorized");
+    return res.status(401).send("Unauthorized");
   }
 }
 
