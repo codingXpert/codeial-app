@@ -10,8 +10,12 @@
     justify-content: space-between;
     background-color: rgb(0, 0, 0);
 
-    span{
-        padding:6px;
+    span a{
+        color: white;
+        position: relative;
+        bottom: -10px;
+        margin: 7px;
+        text-decoration: none;
     }
 
 

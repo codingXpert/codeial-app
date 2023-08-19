@@ -1,7 +1,8 @@
-<li>
+<li class="comment-container">
+    <div class="comment-content">
     <p>
         <% if (locals.user && locals.user.id === comment.user.id) { %>
-            <small>
+            <small class="comment-actions">
                 <a href="/comments/delete/<%= comment.id %>">X</a>
             </small>
         <% } %>
@@ -11,5 +12,6 @@
           <small>
               <%= comment.user.name %>
           </small>
-      </p>    
+      </p> 
+    </div>   
 </li>
