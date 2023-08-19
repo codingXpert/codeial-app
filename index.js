@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const path = require("path");
+const uploads=path.join(__dirname,'uploads');
 const cookieParser = require('cookie-parser');
 const port = 8000;
 const expressLayouts = require('express-ejs-layouts');
@@ -23,7 +25,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(express.static('./assets'));
 //make the uploads path available to the browser
-app.use('/uploads', express.static(__dirname + '/uploads'))
+app.use("/uploads",express.static(__dirname + "/uploads"))
 app.use(expressLayouts);
 //extract style and script from subpages into the layout
 app.set('layout extractStyles', true);
