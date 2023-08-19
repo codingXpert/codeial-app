@@ -61,66 +61,6 @@ module.exports.update = async (req, res) => {
 }
 
 
-// module.exports.update = async (req, res) => {
-//   if (req.user.id == req.params.id) {
-//     try {
-//       let user = await User.findById(req.params.id);
-
-//       User.uploadedAvatar(req, res, function (err) {
-//         if (err) {
-//           console.log("multer Error", err);
-//           req.flash("error", "An error occurred during avatar upload");
-//           return res.redirect("back");
-//         }
-        
-//         user.name = req.body.name;
-//         user.email = req.body.email;
-
-//         if (req.file) {
-//           if (user.avatar) {
-//             const avatarFilePath = path.join(__dirname, '..', user.avatar);
-//             if (fs.existsSync(avatarFilePath)) {
-//               try {
-//                 fs.unlinkSync(avatarFilePath);
-//                 console.log("Previous avatar deleted:", avatarFilePath);
-//               } catch (unlinkErr) {
-//                 console.error("Error deleting previous avatar:", unlinkErr);
-//               }
-//             } else {
-//               console.log("Previous avatar does not exist:", avatarFilePath);
-//             }
-//           }
-          
-//           user.avatar = path.join(User.avatarPath, req.file.filename);
-//         }
-
-//         user.save(function (err) {
-//           if (err) {
-//             console.error(err);
-//             req.flash("error", "An error occurred during user save");
-//             return res.redirect("back");
-//           }
-
-//           req.flash("success", "Profile updated successfully");
-//           return res.redirect("back");
-//         });
-//       });
-//     } catch (err) {
-//       console.error(err);
-//       req.flash("error", "An error occurred");
-//       return res.redirect("back");
-//     }
-//   } else {
-//     req.flash("error", "Unauthorized");
-//     return res.status(401).send("Unauthorized");
-//   }
-// };
-
-
-
-
-
-
 //render the signUp page
 module.exports.signUp = function (req, res) {
     if (req.isAuthenticated()) {
