@@ -35,3 +35,21 @@
 .container form input[type="submit"]:hover {
   background-color: #0056b3;
 }
+
+.container p {
+  margin-top: 20px;
+}
+
+.container p a {
+  display: inline-block;
+  background-color: #db4a39;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.container p a:hover {
+  background-color: #c0392b;
+}

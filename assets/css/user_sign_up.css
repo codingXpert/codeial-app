@@ -73,3 +73,21 @@ input[type="submit"]:disabled:hover {
 ::placeholder {
   color: #aaa;
 }
+
+p {
+  margin-top: 20px;
+}
+
+p a {
+  display: inline-block;
+  background-color: #db4a39;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+p a:hover {
+  background-color: #c0392b;
+}
