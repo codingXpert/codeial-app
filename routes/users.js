@@ -21,4 +21,7 @@ router.post("/create-session",passport.authenticate('local',{failureRedirect: 'u
 
 router.get("/sign-out", userController.destroySession);
 
+router.get("/auth/google", passport.authenticate('google', {scope: ['profile', 'email']}));  // expecting profile and email from google when google hit this route
+router.get("/auth/google/callback", passport.authenticate('google', {failureRedirect: 'users/sign-in'}), userController.createSession); // we get the actual expected profile and email at this route
+
 module.exports = router;
