@@ -1,19 +1,27 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
+const commentsMailer = require('../mailers/comments_mailer');
 
 // create comment  of a post
 module.exports.create = async function (req, res) {
   try {
     const post = await Post.findById(req.body.post);
     if (post) {
-      const comment = await Comment.create({
+      let comment = await Comment.create({
         content: req.body.content,
         post: req.body.post,
         user: req.user._id,
       });
+
       post.comments.push(comment);
-      req.flash('success', 'Comment published');
       await post.save();
+      
+      const populatedComment = await Comment.findById(comment._id)
+      .populate('user', 'name email') // Populate the 'user' field with 'name' and 'email' from the referenced User model
+      .exec();                       //  used to execute a query
+      req.flash('success', 'Comment published');
+      commentsMailer.newComment(populatedComment);
+
       res.redirect('/');
     } else {
       console.log("Post not found");

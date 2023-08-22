@@ -3,13 +3,12 @@ const ejs = require("ejs");
 const path = require("path");
 
 let transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",  // https://support.google.com/a/answer/176600?hl=en
+  host: "smtp.sendgrid.net",
   port: 587,
   secure: false,
   auth: {
-    user: "alchemy.cn18",
-    pass: "codingninjas",
+    user: process.env.API_USER,
+    pass: process.env.API_PASS,
   },
 });
 
