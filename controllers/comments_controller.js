@@ -1,6 +1,8 @@
 const Comment = require("../models/comment");
 const Post = require("../models/post");
 const commentsMailer = require('../mailers/comments_mailer');
+const commentEmailWorker = require("../workers/comment_email_worker")
+const queue = require("../config/que")
 
 // create comment  of a post
 module.exports.create = async function (req, res) {
@@ -20,8 +22,16 @@ module.exports.create = async function (req, res) {
       .populate('user', 'name email') // Populate the 'user' field with 'name' and 'email' from the referenced User model
       .exec();                       //  used to execute a query
       req.flash('success', 'Comment published');
-      commentsMailer.newComment(populatedComment);
-
+      // commentsMailer.newComment(populatedComment);
+      let job = queue.create("emails", populatedComment)  //here emails is the name of the queue we are creating
+      .save(function(err){
+        if(err){
+          console.log("error in creating a queue");
+          return;
+        }else{
+          console.log("Job Enqueued", job.id);
+        }
+      })
       res.redirect('/');
     } else {
       console.log("Post not found");
