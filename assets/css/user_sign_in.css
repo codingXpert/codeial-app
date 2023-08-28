@@ -53,3 +53,23 @@
 .container p a:hover {
   background-color: #c0392b;
 }
+
+.container span {
+  display: block;
+  /* Make the <span> element a block-level element */
+  margin-top: 10px;
+  /* Add some spacing above the <span> element */
+}
+
+.container span a {
+  color: #007bff;
+  /* Set link color */
+  text-decoration: none;
+  /* Remove underline */
+  transition: color 0.3s;
+}
+
+.container span a:hover {
+  color: #0056b3;
+  /* Change color on hover */
+}

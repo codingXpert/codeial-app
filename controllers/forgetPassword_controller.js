@@ -30,7 +30,7 @@ module.exports.forgetPassword = async function (req, res) {
 
 //render the page to insert the email to receive the password reset link
 module.exports.renderForm = function (req, res) {
-  return res.render("../views/mailers/forgetPassword/password", {
+  return res.render("../views/mailers/forgetPassword/send_email", {
     title: "Codeial | Enter Email",
   });
 };
