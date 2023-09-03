@@ -3,6 +3,7 @@ const Post = require("../models/post");
 const commentsMailer = require('../mailers/comments_mailer');
 const commentEmailWorker = require("../workers/comment_email_worker")
 const queue = require("../config/que")
+const Like = require('../models/like');
 
 // create comment  of a post
 module.exports.create = async function (req, res) {
@@ -21,6 +22,16 @@ module.exports.create = async function (req, res) {
       const populatedComment = await Comment.findById(comment._id)
       .populate('user', 'name email') // Populate the 'user' field with 'name' and 'email' from the referenced User model
       .exec();                       //  used to execute a query
+
+      if (req.xhr){
+        return res.status(200).json({
+            data: {
+                comment: comment
+            },
+            message: "Post created!"
+        });
+    }
+
       req.flash('success', 'Comment published');
       // commentsMailer.newComment(populatedComment);
       let job = queue.create("emails", populatedComment)  //here emails is the name of the queue we are creating
@@ -59,6 +70,10 @@ module.exports.destroy = async (req, res) => {
 
       // Update the post to remove the comment from the comments array. the $pull by mongoose will pull out the comment from posts.
       await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } });
+
+       // CHANGE :: destroy the associated likes for this comment
+       await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
+
       req.flash('success', 'Deleted')
       return res.redirect('back');
     } else {

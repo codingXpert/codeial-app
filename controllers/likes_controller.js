@@ -30,7 +30,7 @@ module.exports.toggleLike = async function(req, res){
             likeable.likes.pull(existingLike._id); // likes comes from posts ro comments.js
             likeable.save();
 
-            existingLike.remove();
+            existingLike.deleteOne();
             deleted = true;
 
         }else{
