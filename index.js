@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const environment = require("./config/environment");
 const path = require("path");
 const uploads=path.join(__dirname,'uploads');
 const cookieParser = require('cookie-parser');
@@ -30,15 +31,15 @@ chatServer.listen('5000');
 console.log("Chat server is listening on port 5000");
 
 app.use(sassMiddleware({
-  src: './assets/scss',
-  dest: './assets/css',
+  src: path.join(__dirname, environment.asset_path, 'scss'),
+  dest: path.join(__dirname, environment.asset_path, 'css'),
   debug: true,
   outputStyle: 'expanded',
   prefix: '/css' 
 }));
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
-app.use(express.static('./assets'));
+app.use(express.static(environment.asset_path));
 //make the uploads path available to the browser
 app.use("/uploads",express.static(__dirname + "/uploads"))
 app.use(expressLayouts);
@@ -53,7 +54,7 @@ app.set('views', './views');
 app.use(
   session({
     name: 'codeial',
-    secret: 'somethingblabla',
+    secret: environment.session_cookie_key,
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // cookie valid for 24 hours

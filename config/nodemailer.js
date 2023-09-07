@@ -1,16 +1,9 @@
 const nodemailer = require("nodemailer");
 const ejs = require("ejs");
 const path = require("path");
+const environment = require("./environment");
 
-let transporter = nodemailer.createTransport({
-  host: "smtp.sendgrid.net",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.API_USER,
-    pass: process.env.API_PASS,
-  },
-});
+let transporter = nodemailer.createTransport(environment.smtp);
 
 let renderTemplate = (data, relativePath) => {
   let mailHTML;
