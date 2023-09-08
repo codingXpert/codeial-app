@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const environment = require("./config/environment");
+const logger = require("morgan");
 const path = require("path");
 const uploads=path.join(__dirname,'uploads');
 const cookieParser = require('cookie-parser');
@@ -30,18 +31,22 @@ const io = require("socket.io")(chatServer, {
 chatServer.listen('5000');
 console.log("Chat server is listening on port 5000");
 
-app.use(sassMiddleware({
-  src: path.join(__dirname, environment.asset_path, 'scss'),
-  dest: path.join(__dirname, environment.asset_path, 'css'),
-  debug: true,
-  outputStyle: 'expanded',
-  prefix: '/css' 
-}));
+if(environment.name == 'development') {
+  app.use(sassMiddleware({
+    src: path.join(__dirname, environment.asset_path, 'scss'),
+    dest: path.join(__dirname, environment.asset_path, 'css'),
+    debug: true,
+    outputStyle: 'expanded',
+    prefix: '/css' 
+  }));
+}
+
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(express.static(environment.asset_path));
 //make the uploads path available to the browser
-app.use("/uploads",express.static(__dirname + "/uploads"))
+app.use("/uploads",express.static(__dirname + "/uploads"));
+app.use(logger(environment.morgan.mode, environment.morgan.options));
 app.use(expressLayouts);
 //extract style and script from subpages into the layout
 app.set('layout extractStyles', true);
