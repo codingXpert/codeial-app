@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const environment = require("./config/environment");
+require('./config/view-helpers')(app);
 const logger = require("morgan");
 const path = require("path");
 const uploads=path.join(__dirname,'uploads');
