@@ -25,7 +25,7 @@ const chatSockets =  require('./config/chat_sockets').chatSockets(chatServer);
 
 const io = require("socket.io")(chatServer, {
   cors: {
-    origin: "https://codeial-gu73.onrender.com",
+    origin: "http://localhost:8000",
     // methods: ["GET", "POST"]
   }
 });
