@@ -3,7 +3,7 @@ const nodeMailer = require('../config/nodemailer');
 
 // this is another way of exporting a method
 exports.sendMail = (User) => {
-    const link = `http://localhost:8000/users/setPassword`;
+    const link = `https://codeial-gu73.onrender.com/users/setPassword`;
 
     nodeMailer.transporter.sendMail({
        from: process.env.FROM_EMAIL,

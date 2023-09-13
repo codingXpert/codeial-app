@@ -6,7 +6,7 @@ const logger = require("morgan");
 const path = require("path");
 const uploads=path.join(__dirname,'uploads');
 const cookieParser = require('cookie-parser');
-const port = 8000;
+const port = process.env.PORT || 8000;
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
 const session = require('express-session');
@@ -25,7 +25,7 @@ const chatSockets =  require('./config/chat_sockets').chatSockets(chatServer);
 
 const io = require("socket.io")(chatServer, {
   cors: {
-    origin: "http://localhost:8000",
+    origin: "https://codeial-gu73.onrender.com",
     // methods: ["GET", "POST"]
   }
 });
