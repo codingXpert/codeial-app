@@ -13,7 +13,7 @@ passport.use(
       try {
         const user = await User.findOne({ email: email });
         if (!user || user.password !== password) {
-          req.flash("Invalid Username/Password");
+          req.flash("error", "Invalid Username/Password");
           return done(null, false);
         }
         return done(null, user);
