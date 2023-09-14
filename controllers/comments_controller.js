@@ -33,16 +33,16 @@ module.exports.create = async function (req, res) {
     }
 
       req.flash('success', 'Comment published');
-      // commentsMailer.newComment(populatedComment);
-      let job = queue.create("emails", populatedComment)  //here emails is the name of the queue we are creating
-      .save(function(err){
-        if(err){
-          console.log("error in creating a queue");
-          return;
-        }else{
-          console.log("Job Enqueued", job.id);
-        }
-      })
+      commentsMailer.newComment(populatedComment);
+      // let job = queue.create("emails", populatedComment)  //here emails is the name of the queue we are creating
+      // .save(function(err){
+      //   if(err){
+      //     console.log("error in creating a queue");
+      //     return;
+      //   }else{
+      //     console.log("Job Enqueued", job.id);
+      //   }
+      // })
       res.redirect('/');
     } else {
       console.log("Post not found");
