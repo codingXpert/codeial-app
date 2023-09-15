@@ -25,8 +25,8 @@ const chatSockets =  require('./config/chat_sockets').chatSockets(chatServer);
 
 const io = require("socket.io")(chatServer, {
   cors: {
-    origin: "http://localhost:8000",
-    // methods: ["GET", "POST"]
+    origin: process.env.PORT ? `https://codeial-gu73.onrender.com/users/setPassword` : 'http://localhost:8000/users/setPassword',
+    methods: ["GET", "POST"]
   }
 });
 chatServer.listen('5000');
