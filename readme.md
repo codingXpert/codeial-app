@@ -79,7 +79,7 @@ This is a social media-like application built using Node.js, Express.js, EJS for
 
    ```shell
    git clone https://github.com/yourusername/social-media-app.git
-```
+   
 2. npm install
 
 3. Install redis from.
