@@ -29,7 +29,7 @@ const io = require("socket.io")(chatServer, {
     methods: ["GET", "POST"]
   }
 });
-chatServer.listen('5000');
+chatServer.listen('5000').close();
 console.log("Chat server is listening on port 5000");
 
 if(environment.name == 'development') {

@@ -1,15 +1,20 @@
 <li id="post-<%= post._id %>">
     <p>
-      <% if(locals.user && locals.user.id === post.user.id) { %>
-        <small>
-          <a class="delete-post-button" href="/posts/destroy/<%=post.id %>">X</a>
-        </small>
-        <% } %>
+        <% if (locals.user && locals.user.id && post.user && post.user.id && locals.user.id.toString() === post.user.id.toString()) { %>
+            <small>
+              <a class="delete-post-button" href="/posts/destroy/<%= post.id %>">X</a>
+            </small>
+          <% } %>
+          
         <%= post.content %>
         <br>
         <small>
-            <%= post.user.name %>
-        </small>
+            <% if (post.user && post.user.name) { %>
+              <%= post.user.name %>
+            <% } else { %>
+              User Data Missing
+            <% } %>
+          </small>
 
          <!-- CHANGE :: display the likes of this post, if the user is logged in, then show the link to toggle likes, else, just show the count -->
          <br>

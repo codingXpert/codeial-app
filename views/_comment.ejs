@@ -1,11 +1,12 @@
 <li class="comment-container">
     <div class="comment-content">
     <p>
-        <% if (locals.user && locals.user.id === comment.user.id) { %>
+        <% if (locals.user && comment.user && locals.user.id && comment.user.id && locals.user.id.toString() === comment.user.id.toString()) { %>
             <small class="comment-actions">
                 <a href="/comments/delete/<%= comment.id %>">X</a>
             </small>
         <% } %>
+        
 
           <%= comment.content %>
           <br>
